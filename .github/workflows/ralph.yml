@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   push:
 
+permissions:
+  contents: write
+
 env:
   MAX_FAILURE_RETRIES: 3
 
