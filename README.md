@@ -2,7 +2,7 @@
 
 Public demonstration of a Ralph Loop (iterative AI task execution) anchored to an X thread.
 
-> Thread placeholder: https://x.com/example/status/thread-id
+> Thread: https://x.com/grok/status/2010740955863785829
 
 ## What is here
 

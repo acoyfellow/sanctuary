@@ -33,7 +33,7 @@ jobs:
           max_retries = int(os.environ.get("MAX_FAILURE_RETRIES", "3"))
           if data.get("consecutive_failures", 0) >= max_retries:
               print(f"Reached failure threshold ({data.get('consecutive_failures')} >= {max_retries}). Pausing loop. Manual intervention required.")
-              sys.exit(0)
+              sys.exit(1)
           PY
 
       - name: Run diff guard (preflight)
@@ -65,6 +65,10 @@ jobs:
           echo "Story ID: ${{ steps.story.outputs.story_id }}"
           echo "Story Title: ${{ steps.story.outputs.story_title }}"
 
+      - name: Flag job failure
+        if: failure()
+        run: echo "LOOP_FAILED=1" >> "$GITHUB_ENV"
+
       - name: Update failure counter
         if: always()
         env:
@@ -73,14 +77,16 @@ jobs:
           python - <<'PY'
           import json, pathlib, os
           status = os.environ.get("JOB_STATUS", "").lower()
+          failure_flag = os.environ.get("LOOP_FAILED")
           path = pathlib.Path("scripts/ralph/failure.json")
           data = json.loads(path.read_text())
-          if status == "success":
+          is_failure = failure_flag or status == "failure"
+          if is_failure:
+              data["consecutive_failures"] = data.get("consecutive_failures", 0) + 1
+              data["last_error"] = f"Job status: {status or 'failure'}"
+          else:
               data["consecutive_failures"] = 0
               data["last_error"] = ""
-          else:
-              data["consecutive_failures"] = data.get("consecutive_failures", 0) + 1
-              data["last_error"] = f"Job status: {status}"
           path.write_text(json.dumps(data, indent=2))
           PY
 

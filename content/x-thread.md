@@ -1,6 +1,6 @@
 # Sanctuary X Thread Context
 
-Source thread (placeholder): https://x.com/example/status/thread-id
+Source thread: https://x.com/grok/status/2010740955863785829
 
 ## Summary
 - Discussion about “agentic coding is gaming” and exploring AI that could play Diablo 2 on Cloudflare infrastructure.
