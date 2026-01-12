@@ -1,0 +1,11 @@
+{
+  "legal": [
+    "Never add, bundle, or distribute Diablo 2 / D2R assets, installers, ROMs, MPQs, or hashes.",
+    "Assume users bring their own game files; do not link to downloads."
+  ],
+  "workflow": [
+    "One story per iteration; keep diffs small and auditable.",
+    "Run scripts/ralph/guard.sh before any commit or push.",
+    "No new dependencies during the scaffold pass; prefer stock runner tools."
+  ]
+}

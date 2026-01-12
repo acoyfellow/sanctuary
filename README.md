@@ -1,34 +1,26 @@
 # Sanctuary
 
-Public demonstration of Ralph Loop (iterative AI task execution) using a Grok thread as the execution log.
-> Follow along: https://x.com/grok/status/2010740955863785829
+Public demonstration of a Ralph Loop (iterative AI task execution) anchored to an X thread.
 
-## Concept
+> Thread placeholder: https://x.com/example/status/thread-id
 
-Run a Ralph Loop in a public Grok thread where:
-- Thread = database + execution log
-- PRD drives iteration
-- Each step verifies before continuing
-- Full chain-of-thought is auditable
+## What is here
 
-## Why
+- `scripts/ralph/prd.json` — tiny PRD that drives each loop iteration.
+- `scripts/ralph/guard.sh` — diff guard to keep changes small and legal.
+- `scripts/ralph/failure.json` — tracks consecutive failures so the loop pauses safely.
+- `content/x-thread.md` — captures the Grok/X thread context.
+- `content/LEGAL.md` — legal boundaries; users supply their own Diablo 2 / D2R assets.
 
-Teaches how to:
-1. Instruct LLMs for complex systems
-2. Write LLM-executable PRDs
-3. Maintain transparency in AI execution
+## Running the Ralph Loop
 
-## How
+1. Trigger manually via **Actions → Ralph Loop → Run workflow** (workflow_dispatch).
+2. Auto-runs on push events **only when the actor is a bot**; humans use manual dispatch.
+3. The workflow uses `secrets.RALPH_PAT` for checkout/push and enforces `scripts/ralph/guard.sh` before committing changes.
+4. Progress is appended to `scripts/ralph/progress.txt`; failures are counted in `scripts/ralph/failure.json` and paused when they hit `MAX_FAILURE_RETRIES`.
 
-- Compressed JSON specs for context efficiency
-- Grok's thread awareness drives iteration
-- Verification checkpoints prevent error compounding
+## Scope and safety
 
-## Progression
-
-1. **Single-player** — establish Ralph Loop mechanics
-2. **Multiplayer** — scale to distributed execution
-
-## Meta
-
-A Ralph Loop teaching Ralph Loops, executed live in public.
+- One story per iteration; keep diffs small.
+- No new dependencies in this scaffold pass.
+- Never add or distribute Diablo 2 / D2R assets; users must provide their own files.

@@ -1,0 +1,29 @@
+{
+  "product": "Sanctuary Ralph Loop",
+  "stories": [
+    {
+      "id": "S-001",
+      "title": "Capture the Grok/X thread context",
+      "status": "todo",
+      "notes": "Summarize the origin thread in content/x-thread.md and keep a discoverable link in README."
+    },
+    {
+      "id": "S-002",
+      "title": "Document Sanctuary legal boundaries",
+      "status": "todo",
+      "notes": "content/LEGAL.md should clearly state user-supplied assets and forbidden Diablo 2 / D2R distributions."
+    },
+    {
+      "id": "S-003",
+      "title": "Explain how to run the Ralph loop",
+      "status": "todo",
+      "notes": "README should describe workflow_dispatch usage, bot-only push behavior, and where progress/failures are logged."
+    },
+    {
+      "id": "S-004",
+      "title": "Ralph scaffold and CI hook in place",
+      "status": "done",
+      "notes": "Workflow ralph.yml exists with guard + failure tracking; ready for manual dispatch and bot pushes."
+    }
+  ]
+}
