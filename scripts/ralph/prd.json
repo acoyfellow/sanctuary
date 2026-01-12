@@ -5,7 +5,7 @@
       "id": "S-001",
       "title": "Capture the Grok/X thread context",
       "status": "todo",
-      "notes": "Summarize the origin thread in content/x-thread.md and keep a discoverable link in README."
+      "notes": "Summarize the original thread in content/x-thread.md and keep a discoverable link in README."
     },
     {
       "id": "S-002",

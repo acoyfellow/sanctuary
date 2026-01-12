@@ -115,7 +115,7 @@ jobs:
         run: |
           set -e
           # Commit when either tracked files changed or untracked files exist.
-          if ! git diff --quiet --ignore-submodules --; then
+          if ! git diff --quiet --ignore-submodules; then
             changes_present=1
           elif [ -n "$(git ls-files --others --exclude-standard)" ]; then
             changes_present=1
