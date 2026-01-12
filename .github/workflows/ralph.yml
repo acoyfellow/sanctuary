@@ -87,7 +87,10 @@ jobs:
           status = os.environ.get("JOB_STATUS", "").lower()
           failure_flag = os.environ.get("LOOP_FAILED")
           path = pathlib.Path("scripts/ralph/failure.json")
-          data = json.loads(path.read_text())
+          try:
+              data = json.loads(path.read_text())
+          except Exception as exc:
+              data = {"consecutive_failures": 0, "last_error": f"reset after parse error: {exc}"}
           is_failure = failure_flag or status == "failure"
           if is_failure:
               data["consecutive_failures"] = data.get("consecutive_failures", 0) + 1
@@ -112,7 +115,15 @@ jobs:
         run: |
           set -e
           # Commit when either tracked files changed or untracked files exist.
-          if ! git diff --quiet --ignore-submodules -- || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+          if ! git diff --quiet --ignore-submodules --; then
+            changes_present=1
+          elif [ -n "$(git ls-files --others --exclude-standard)" ]; then
+            changes_present=1
+          else
+            changes_present=0
+          fi
+
+          if [ "$changes_present" -eq 1 ]; then
             git add -A
             git commit -m "chore: update ralph run logs"
             git push
