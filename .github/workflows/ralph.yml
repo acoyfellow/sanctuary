@@ -29,7 +29,14 @@ jobs:
           python - <<'PY'
           import json, pathlib, os, sys
           path = pathlib.Path("scripts/ralph/failure.json")
-          data = json.loads(path.read_text())
+          if not path.exists():
+              data = {"consecutive_failures": 0, "last_error": "failure.json missing"}
+          else:
+              try:
+                  data = json.loads(path.read_text())
+              except Exception as exc:
+                  print(f"Failed to read failure.json: {exc}")
+                  sys.exit(1)
           max_retries = int(os.environ.get("MAX_FAILURE_RETRIES", "3"))
           if data.get("consecutive_failures", 0) >= max_retries:
               print(f"Reached failure threshold ({data.get('consecutive_failures')} >= {max_retries}). Pausing loop. Manual intervention required.")
@@ -104,7 +111,7 @@ jobs:
         run: |
           set -e
           if git status --porcelain | grep -q .; then
-            git add scripts/ralph/failure.json scripts/ralph/progress.txt
+            git add -A
             git commit -m "chore: update ralph run logs"
             git push
           else

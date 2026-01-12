@@ -11,7 +11,7 @@ if [ -z "$changes" ]; then
   exit 0
 fi
 
-blocked='(\.mpq|\.iso|\.exe|\.d2r|\.rom|\.bin)$'
+blocked='^.*\.(mpq|iso|exe|d2r|rom|bin)$'
 if echo "$changes" | awk '{print $2}' | grep -E "$blocked" >/dev/null 2>&1; then
   echo "guard: blocked file type detected in changes"
   exit 1
