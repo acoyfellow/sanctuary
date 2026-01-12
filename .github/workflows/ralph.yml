@@ -30,7 +30,7 @@ jobs:
           import json, pathlib, os, sys
           path = pathlib.Path("scripts/ralph/failure.json")
           if not path.exists():
-              data = {"consecutive_failures": 0, "last_error": "failure.json missing"}
+              data = {"consecutive_failures": 0, "last_error": "initialized"}
               path.write_text(json.dumps(data, indent=2))
           else:
               try:
@@ -64,7 +64,7 @@ jobs:
                   fh.write(f"story_id={current['id']}\n")
                   fh.write(f"story_title={current['title']}\n")
               with open("scripts/ralph/progress.txt", "a", encoding="utf-8") as log:
-                  log.write(f"{current['id']}: queued via CI\n")
+                  log.write(f"[queued] {current['id']} - {current['title']}\n")
               print(f"Next story: {current['id']} - {current['title']}")
           PY
 
@@ -111,6 +111,7 @@ jobs:
           GIT_COMMITTER_EMAIL: ralph-bot@users.noreply.github.com
         run: |
           set -e
+          # Commit when either tracked files changed or untracked files exist.
           if ! git diff --quiet --ignore-submodules -- || [ -n "$(git ls-files --others --exclude-standard)" ]; then
             git add -A
             git commit -m "chore: update ralph run logs"
