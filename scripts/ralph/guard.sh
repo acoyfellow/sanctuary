@@ -18,7 +18,7 @@ if echo "$changes" | awk '{print $2}' | grep -E "$blocked" >/dev/null 2>&1; then
 fi
 
 max_files=25
-file_count="$(echo "$changes" | wc -l | tr -d ' ')"
+file_count="$(printf "%s" "$changes" | wc -l | tr -d ' ')"
 if [ "$file_count" -gt "$max_files" ]; then
   echo "guard: too many files changed ($file_count > $max_files)"
   exit 1

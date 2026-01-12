@@ -5,7 +5,7 @@
   ],
   "workflow": [
     "One story per iteration; keep diffs small and auditable.",
-    "Run scripts/ralph/guard.sh before any commit or push.",
+    "Run ./scripts/ralph/guard.sh before any commit or push.",
     "No new dependencies during the scaffold pass; prefer stock runner tools."
   ]
 }

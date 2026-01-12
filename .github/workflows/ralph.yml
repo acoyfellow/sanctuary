@@ -32,7 +32,7 @@ jobs:
           data = json.loads(path.read_text())
           max_retries = int(os.environ.get("MAX_FAILURE_RETRIES", "3"))
           if data.get("consecutive_failures", 0) >= max_retries:
-              print(f"Reached failure threshold ({data.get('consecutive_failures')} >= {max_retries}). Pausing.")
+              print(f"Reached failure threshold ({data.get('consecutive_failures')} >= {max_retries}). Pausing loop. Manual intervention required.")
               sys.exit(0)
           PY
 
@@ -97,7 +97,7 @@ jobs:
           GIT_COMMITTER_EMAIL: ralph-bot@users.noreply.github.com
         run: |
           set -e
-          if git status --porcelain | grep .; then
+          if git status --porcelain | grep -q .; then
             git add scripts/ralph/failure.json scripts/ralph/progress.txt
             git commit -m "chore: update ralph run logs"
             git push
